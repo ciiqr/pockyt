@@ -201,15 +201,28 @@ class Client(object):
                 action = 'favorite'
             else:
                 action = 'unfavorite'
+        elif self._args.tags != '-1':
+            action = 'tags_replace'
         else:
             action = ''
 
-        payload = {
-            'actions': tuple({
-                'action': action,
-                'item_id': info['id'],
-            } for info in self._input),
-        }
+        # tag actions
+        # TODO: implement this better
+        if action in ['tags_replace']:
+            payload = {
+                'actions': tuple({
+                    'action': action,
+                    'item_id': info['id'],
+                    'tags': self._args.tags,
+                } for info in self._input),
+            }
+        else:
+            payload = {
+                'actions': tuple({
+                    'action': action,
+                    'item_id': info['id'],
+                } for info in self._input),
+            }
 
         self._payload = payload
         self._api_endpoint = API.MODIFY_URL

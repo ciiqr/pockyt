@@ -126,6 +126,12 @@ class Pockyt(object):
             choices=[-1, 0, 1], type=int,
             help='favorite items : <option> : {-1: None, [1: favorite, 0: unfavorite]}',
         )
+        # TODO: add an option to do tag actions other than replace, with the default set to tags_add
+        options.add_argument(
+            '-t', '--tags', default='-1', metavar='<option>',
+            type=str,
+            help='replace tags on items : <option> : {-1: Do Nothing, [<tagname>[,<tagname>...]]}',
+        )
 
     def run(self):
         if not self._args.do:
